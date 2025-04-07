@@ -11,7 +11,7 @@ JournalApp is a simple yet powerful journaling application built using Spring Bo
 5) Delete Journal Entry: Users can remove a journal entry by sending a DELETE request with the entry's ID.
 
 # API Endpoints
-1)GET /journal: Retrieve all journal entries.
+1) GET /journal: Retrieve all journal entries.
 2) POST /journal: Create a new journal entry.
 3) GET /journal/id/{myId}: Retrieve a journal entry by its ID.
 4) PUT /journal/id/{id}: Update a journal entry by its ID.
