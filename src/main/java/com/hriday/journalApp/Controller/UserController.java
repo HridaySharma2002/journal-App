@@ -1,43 +1,41 @@
 package com.hriday.journalApp.Controller;
 
-import com.hriday.journalApp.entity.JournalEntry;
 import com.hriday.journalApp.entity.User;
-import com.hriday.journalApp.service.JournalEntryService;
+import com.hriday.journalApp.repository.UserRepository;
 import com.hriday.journalApp.service.UserService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
-@Autowired
+
+    @Autowired
     private UserService userService;
 
-@GetMapping
-public List<User> getAllUsers(){
-    return userService.getAll();
-}
+    @Autowired
+    private UserRepository userRepository;
 
-@PostMapping
-    public void createUser(@RequestBody User user){
-    userService.saveEntry(user);
-}
 
-@PutMapping("/{userName}")
-    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String userName){
+@PutMapping
+    public ResponseEntity<?> updateUser(@RequestBody User user){
+    Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+    String userName=authentication.getName();
     User userInDb = userService.findByUserName(userName);
-    if(userInDb !=null){
-        userInDb.setUserName(user.getUserName());
-        userInDb.setPassword(user.getPassword());
-        userService.saveEntry(userInDb);
-    }
+    userInDb.setUserName(user.getUserName());
+    userInDb.setPassword(user.getPassword());
+    userService.saveNewUser(userInDb);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 }
+    @DeleteMapping
+    public ResponseEntity<?> deleteUserById(){
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        userRepository.deleteByUserName(authentication.getName());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
