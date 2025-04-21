@@ -22,7 +22,7 @@ public class UserServiceTests {
     @Autowired
     private UserService userService;
 
-    @Disabled
+
     @ParameterizedTest
     @ArgumentsSource(UserArgumentsProvider.class)
     public void testSaveNewUser(User user){
