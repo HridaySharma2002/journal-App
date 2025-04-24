@@ -4,6 +4,8 @@ import com.hriday.journalApp.entity.User;
 import com.hriday.journalApp.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,7 @@ public class UserService {
 
     private static final PasswordEncoder passwordEncoder =new BCryptPasswordEncoder();
 
+
     public boolean saveNewUser(User user){
             try{
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -29,6 +32,11 @@ public class UserService {
                 userRepository.save(user);
                 return true;
             } catch (Exception e) {
+                log.error("logging error");
+                log.warn("logging error");
+                log.info("logging error");
+                log.debug("logging error");
+                log.trace("logging error");
                 return false;
             }
     }
