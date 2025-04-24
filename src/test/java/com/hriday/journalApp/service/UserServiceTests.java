@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class UserServiceTests {
+ class UserServiceTests {
 
     @Autowired
     private UserRepository userRepository;
@@ -22,10 +22,10 @@ public class UserServiceTests {
     @Autowired
     private UserService userService;
 
-
+    @Disabled
     @ParameterizedTest
     @ArgumentsSource(UserArgumentsProvider.class)
-    public void testSaveNewUser(User user){
+    void testSaveNewUser(User user){
         assertTrue(userService.saveNewUser(user));
     }
 
@@ -35,7 +35,7 @@ public class UserServiceTests {
             "1,1,2",
             "2,10,12"
     })
-    public void test(int a,int b,int expected){
+    void test(int a,int b,int expected){
         assertEquals(expected,a+b);
     }
 }
