@@ -1,4 +1,15 @@
+name: SonarCloud # You already have this
+
+on:
+  push:
+    branches:
+      - main # Or master, depending on your main branch name
+  pull_request:
+    branches:
+      - main # Or master
+
 jobs:
+  # Your build job definition will go here
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
@@ -11,7 +22,7 @@ jobs:
         with:
           java-version: 17
           distribution: 'zulu'
-      - name: Cache SonarQube packages
+      - name: Cache SonarCloud packages
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
@@ -24,8 +35,9 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Build
-        run: mvn clean install -B # Add this step to build your project
-      - name: Analyze with SonarQube
+        run: mvn clean install -B
+      - name: Analyze with SonarCloud
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=hriday_journalapp
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed for SonarCloud integration
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }} # Ensure you have this secret set in GitHub
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=your-project-key -Dsonar.organization=your-organization-key
