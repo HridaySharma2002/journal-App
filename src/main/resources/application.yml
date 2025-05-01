@@ -21,4 +21,4 @@ mail:
           enable: true
 weather:
   api:
-    key: f0c4c145031902e307af180b5bc5e066
+    key: api_key
