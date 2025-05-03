@@ -5,7 +5,7 @@ import com.hriday.journalApp.entity.JournalEntry;
 import com.hriday.journalApp.entity.User;
 import com.hriday.journalApp.enums.Sentiment;
 import com.hriday.journalApp.repository.UserRepositoryImpl;
-import com.hriday.journalApp.service.EmailService;
+//import com.hriday.journalApp.service.EmailService;
 import com.hriday.journalApp.service.SentimentAnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,8 +21,9 @@ import java.util.stream.Collectors;
 @Component
 public class UserScheduler {
 
+    /*
     @Autowired
-    private EmailService emailService;
+    private EmailService emailService;*/
 
     @Autowired
     private UserRepositoryImpl userRepository;
@@ -53,9 +54,10 @@ public class UserScheduler {
                     mostFrequentSentiment=entry.getKey();
                 }
             }
+            /*
             if(mostFrequentSentiment !=null){
                 emailService.sendEmail(user.getEmail(),"Sentiment for last 7 days",mostFrequentSentiment.toString());
-            }
+            }*/
         }
     }
 
